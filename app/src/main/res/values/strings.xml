@@ -1,0 +1,29 @@
+<resources>
+    <string name="app_name">Job Search App</string>
+    
+    <string-array name="job_types">
+        <item>Pilih Tipe</item>
+        <item>full-time</item>
+        <item>part-time</item>
+        <item>freelance</item>
+    </string-array>
+    
+    <string-array name="job_status">
+        <item>aktif</item>
+        <item>nonaktif</item>
+    </string-array>
+    
+    <string-array name="salary_ranges">
+        <item>Semua Gaji</item>
+        <item>&lt; 5 Juta</item>
+        <item>5 - 10 Juta</item>
+        <item>&gt; 10 Juta</item>
+    </string-array>
+    
+    <string-array name="application_status">
+        <item>submitted</item>
+        <item>reviewed</item>
+        <item>shortlisted</item>
+        <item>rejected</item>
+    </string-array>
+</resources>

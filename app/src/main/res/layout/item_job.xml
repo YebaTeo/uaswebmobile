@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
+    app:cardElevation="4dp"
+    app:cardCornerRadius="8dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp">
+
+        <TextView
+            android:id="@+id/tvJobTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Job Title"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/tvDate"
+            android:layout_marginEnd="8dp"/>
+
+        <TextView
+            android:id="@+id/tvCompany"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Company Name"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintTop_toBottomOf="@id/tvJobTitle"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="4dp" />
+
+        <TextView
+            android:id="@+id/tvLocation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Location"
+            android:textSize="14sp"
+            app:layout_constraintTop_toBottomOf="@id/tvCompany"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginTop="8dp" />
+
+        <TextView
+            android:id="@+id/tvSalary"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Salary"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            app:layout_constraintTop_toBottomOf="@id/tvLocation"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="8dp" />
+
+        <TextView
+            android:id="@+id/tvType"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Full-time"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="@+id/tvLocation"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/tvLocation" />
+
+        <TextView
+            android:id="@+id/tvDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Date"
+            android:textSize="12sp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</com.google.android.material.card.MaterialCardView>
