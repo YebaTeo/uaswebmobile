@@ -26,5 +26,11 @@ public interface ApplicationDao {
     
     @Query("SELECT * FROM applications WHERE jobId = :jobId ORDER BY tanggalLamaran DESC")
     List<Application> getApplicationsByJobOrdered(int jobId);
+    
+    @Query("SELECT * FROM applications WHERE jobSeekerId = :userId")
+    List<Application> getApplicationsByUser(int userId);
+    
+    @Query("SELECT * FROM applications WHERE jobSeekerId = :userId AND status = :status")
+    List<Application> getApplicationsByUserAndStatus(int userId, String status);
 }
 

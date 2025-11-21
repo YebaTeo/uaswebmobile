@@ -7,18 +7,21 @@ import androidx.room.RoomDatabase;
 import com.example.uaswebmobile.dao.ApplicationDao;
 import com.example.uaswebmobile.dao.BookmarkDao;
 import com.example.uaswebmobile.dao.JobDao;
+import com.example.uaswebmobile.dao.NotificationDao;
 import com.example.uaswebmobile.dao.UserDao;
 import com.example.uaswebmobile.entity.Application;
 import com.example.uaswebmobile.entity.Bookmark;
 import com.example.uaswebmobile.entity.Job;
+import com.example.uaswebmobile.entity.Notification;
 import com.example.uaswebmobile.entity.User;
 
-@Database(entities = {User.class, Job.class, Application.class, Bookmark.class}, version = 1, exportSchema = false)
+@Database(entities = {User.class, Job.class, Application.class, Bookmark.class, Notification.class}, version = 2, exportSchema = false)
 public abstract class AppDatabase extends RoomDatabase {
     public abstract UserDao userDao();
     public abstract JobDao jobDao();
     public abstract ApplicationDao applicationDao();
     public abstract BookmarkDao bookmarkDao();
+    public abstract NotificationDao notificationDao();
     
     private static AppDatabase INSTANCE;
     
@@ -29,6 +32,7 @@ public abstract class AppDatabase extends RoomDatabase {
                     INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
                             AppDatabase.class, "job_search_database")
                             .allowMainThreadQueries()
+                            .fallbackToDestructiveMigration()
                             .build();
                 }
             }

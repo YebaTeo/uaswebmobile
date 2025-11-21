@@ -12,6 +12,7 @@ import com.example.uaswebmobile.R;
 import com.example.uaswebmobile.adapter.JobAdapter;
 import com.example.uaswebmobile.database.AppDatabase;
 import com.example.uaswebmobile.entity.Job;
+import com.example.uaswebmobile.util.NotificationHelper;
 import com.example.uaswebmobile.util.SharedPrefManager;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import java.util.List;
@@ -78,10 +79,28 @@ public class EmployerJobManagementActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        if (id == R.id.menuLogout) {
-            sharedPrefManager.logout();
-            startActivity(new Intent(this, LoginActivity.class));
-            finish();
+        if (id == R.id.menuDashboard) {
+            startActivity(new Intent(this, EmployerDashboardActivity.class));
+            return true;
+        } else if (id == R.id.menuApplications) {
+            startActivity(new Intent(this, ApplicationManagementActivity.class));
+            return true;
+        } else if (id == R.id.menuAnalytics) {
+            startActivity(new Intent(this, AnalyticsActivity.class));
+            return true;
+        } else if (id == R.id.menuNotifications) {
+            startActivity(new Intent(this, NotificationsActivity.class));
+            return true;
+        } else if (id == R.id.menuSettings) {
+            startActivity(new Intent(this, SettingsActivity.class));
+            return true;
+        } else if (id == R.id.menuLogout) {
+            NotificationHelper.showConfirm(this, "Konfirmasi Logout", 
+                "Apakah Anda yakin ingin logout?", () -> {
+                    sharedPrefManager.logout();
+                    startActivity(new Intent(this, LoginActivity.class));
+                    finish();
+                });
             return true;
         } else if (id == android.R.id.home) {
             onBackPressed();

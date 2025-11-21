@@ -23,5 +23,8 @@ public interface BookmarkDao {
     
     @Query("SELECT jobs.* FROM jobs INNER JOIN bookmarks ON jobs.id = bookmarks.jobId WHERE bookmarks.jobSeekerId = :jobSeekerId")
     List<com.example.uaswebmobile.entity.Job> getBookmarkedJobs(int jobSeekerId);
+    
+    @Query("SELECT * FROM bookmarks WHERE jobSeekerId = :userId")
+    List<Bookmark> getBookmarksByUser(int userId);
 }
 

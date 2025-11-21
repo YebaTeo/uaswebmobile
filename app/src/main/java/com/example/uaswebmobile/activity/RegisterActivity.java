@@ -5,9 +5,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import com.example.uaswebmobile.R;
+import com.example.uaswebmobile.util.NotificationHelper;
 import com.example.uaswebmobile.database.AppDatabase;
 import com.example.uaswebmobile.entity.User;
 
@@ -23,8 +24,11 @@ public class RegisterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
-        getSupportActionBar().setTitle("Register");
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
 
         database = AppDatabase.getDatabase(this);
 
@@ -45,29 +49,29 @@ public class RegisterActivity extends AppCompatActivity {
             int selectedRoleId = rgRole.getCheckedRadioButtonId();
 
             if (username.isEmpty() || email.isEmpty() || password.isEmpty() || confirmPassword.isEmpty()) {
-                Toast.makeText(this, "Semua field harus diisi", Toast.LENGTH_SHORT).show();
+                NotificationHelper.showWarning(this, "Peringatan", "Semua field harus diisi");
                 return;
             }
 
             if (!password.equals(confirmPassword)) {
-                Toast.makeText(this, "Password tidak cocok", Toast.LENGTH_SHORT).show();
+                NotificationHelper.showError(this, "Error", "Password tidak cocok. Silakan coba lagi.");
                 return;
             }
 
             if (selectedRoleId == -1) {
-                Toast.makeText(this, "Pilih role terlebih dahulu", Toast.LENGTH_SHORT).show();
+                NotificationHelper.showWarning(this, "Peringatan", "Pilih role terlebih dahulu");
                 return;
             }
 
             // Check if username already exists
             if (database.userDao().getUserByUsername(username) != null) {
-                Toast.makeText(this, "Username sudah digunakan", Toast.LENGTH_SHORT).show();
+                NotificationHelper.showError(this, "Error", "Username sudah digunakan. Silakan pilih username lain.");
                 return;
             }
 
             // Check if email already exists
             if (database.userDao().getUserByEmail(email) != null) {
-                Toast.makeText(this, "Email sudah digunakan", Toast.LENGTH_SHORT).show();
+                NotificationHelper.showError(this, "Error", "Email sudah digunakan. Silakan gunakan email lain.");
                 return;
             }
 
@@ -77,10 +81,10 @@ public class RegisterActivity extends AppCompatActivity {
             long userId = database.userDao().insertUser(user);
 
             if (userId > 0) {
-                Toast.makeText(this, "Registrasi berhasil!", Toast.LENGTH_SHORT).show();
+                NotificationHelper.showSuccess(this, "Berhasil", "Registrasi berhasil! Silakan login untuk melanjutkan.");
                 finish();
             } else {
-                Toast.makeText(this, "Registrasi gagal", Toast.LENGTH_SHORT).show();
+                NotificationHelper.showError(this, "Gagal", "Registrasi gagal. Silakan coba lagi.");
             }
         });
     }

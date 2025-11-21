@@ -12,14 +12,18 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.UASWEBMOBILE">
         <activity
-            android:name=".activity.LoginActivity"
-            android:exported="true">
+            android:name=".activity.SplashActivity"
+            android:exported="true"
+            android:theme="@style/Theme.App.Splash">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".activity.LoginActivity"
+            android:exported="false" />
         <activity
             android:name=".activity.RegisterActivity"
             android:exported="false" />
@@ -48,7 +52,28 @@
             android:name=".activity.ApplicationManagementActivity"
             android:exported="false" />
         <activity
+            android:name=".activity.MyApplicationsActivity"
+            android:exported="false" />
+        <activity
             android:name=".MainActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.JobSeekerDashboardActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.StatisticsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.SettingsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.NotificationsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.EmployerDashboardActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.AnalyticsActivity"
             android:exported="false" />
     </application>
 

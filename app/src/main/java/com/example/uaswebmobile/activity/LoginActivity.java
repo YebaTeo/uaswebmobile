@@ -5,7 +5,7 @@ import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
+import com.example.uaswebmobile.util.NotificationHelper;
 import androidx.appcompat.app.AppCompatActivity;
 import com.example.uaswebmobile.R;
 import com.example.uaswebmobile.database.AppDatabase;
@@ -47,17 +47,17 @@ public class LoginActivity extends AppCompatActivity {
             String password = etPassword.getText().toString().trim();
             
             if (username.isEmpty() || password.isEmpty()) {
-                Toast.makeText(this, "Username dan password harus diisi", Toast.LENGTH_SHORT).show();
+                NotificationHelper.showWarning(this, "Peringatan", "Username dan password harus diisi");
                 return;
             }
             
             User user = database.userDao().login(username, password);
             if (user != null) {
                 sharedPrefManager.saveUser(user.id, user.username, user.role);
-                Toast.makeText(this, "Login berhasil!", Toast.LENGTH_SHORT).show();
+                NotificationHelper.showSuccess(this, "Berhasil", "Login berhasil! Selamat datang kembali.");
                 redirectToMain();
             } else {
-                Toast.makeText(this, "Username atau password salah", Toast.LENGTH_SHORT).show();
+                NotificationHelper.showError(this, "Gagal Login", "Username atau password salah. Silakan coba lagi.");
             }
         });
         
@@ -70,9 +70,9 @@ public class LoginActivity extends AppCompatActivity {
         String role = sharedPrefManager.getRole();
         Intent intent;
         if ("employer".equals(role)) {
-            intent = new Intent(this, EmployerJobManagementActivity.class);
+            intent = new Intent(this, EmployerDashboardActivity.class);
         } else {
-            intent = new Intent(this, JobListActivity.class);
+            intent = new Intent(this, JobSeekerDashboardActivity.class);
         }
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);

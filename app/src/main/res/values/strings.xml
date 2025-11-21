@@ -25,5 +25,6 @@
         <item>reviewed</item>
         <item>shortlisted</item>
         <item>rejected</item>
+        <item>Approved</item>
     </string-array>
 </resources>

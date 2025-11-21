@@ -12,8 +12,8 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
-import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
+import com.example.uaswebmobile.util.NotificationHelper;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -44,6 +44,7 @@ public class JobListActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null) {
             getSupportActionBar().setTitle("Daftar Lowongan");
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
 
         database = AppDatabase.getDatabase(this);
@@ -168,16 +169,37 @@ public class JobListActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        if (id == R.id.menuProfile) {
+        if (id == android.R.id.home) {
+            onBackPressed();
+            return true;
+        } else if (id == R.id.menuDashboard) {
+            startActivity(new Intent(this, JobSeekerDashboardActivity.class));
+            return true;
+        } else if (id == R.id.menuProfile) {
             startActivity(new Intent(this, JobSeekerProfileActivity.class));
+            return true;
+        } else if (id == R.id.menuApplications) {
+            startActivity(new Intent(this, MyApplicationsActivity.class));
             return true;
         } else if (id == R.id.menuBookmarks) {
             startActivity(new Intent(this, BookmarkActivity.class));
             return true;
+        } else if (id == R.id.menuStatistics) {
+            startActivity(new Intent(this, StatisticsActivity.class));
+            return true;
+        } else if (id == R.id.menuNotifications) {
+            startActivity(new Intent(this, NotificationsActivity.class));
+            return true;
+        } else if (id == R.id.menuSettings) {
+            startActivity(new Intent(this, SettingsActivity.class));
+            return true;
         } else if (id == R.id.menuLogout) {
-            sharedPrefManager.logout();
-            startActivity(new Intent(this, LoginActivity.class));
-            finish();
+            NotificationHelper.showConfirm(this, "Konfirmasi Logout", 
+                "Apakah Anda yakin ingin logout?", () -> {
+                    sharedPrefManager.logout();
+                    startActivity(new Intent(this, LoginActivity.class));
+                    finish();
+                });
             return true;
         }
         return super.onOptionsItemSelected(item);

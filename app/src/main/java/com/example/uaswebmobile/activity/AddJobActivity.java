@@ -6,12 +6,12 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import com.example.uaswebmobile.R;
 import com.example.uaswebmobile.database.AppDatabase;
 import com.example.uaswebmobile.entity.Job;
+import com.example.uaswebmobile.util.NotificationHelper;
 import com.example.uaswebmobile.util.SharedPrefManager;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -76,7 +76,7 @@ public class AddJobActivity extends AppCompatActivity {
 
         if (jobTitle.isEmpty() || company.isEmpty() || location.isEmpty() ||
             description.isEmpty() || salaryMinStr.isEmpty() || salaryMaxStr.isEmpty()) {
-            Toast.makeText(this, "Semua field harus diisi", Toast.LENGTH_SHORT).show();
+            NotificationHelper.showWarning(this, "Peringatan", "Semua field harus diisi");
             return;
         }
 
@@ -85,7 +85,7 @@ public class AddJobActivity extends AppCompatActivity {
             int salaryMax = Integer.parseInt(salaryMaxStr);
 
             if (salaryMin > salaryMax) {
-                Toast.makeText(this, "Gaji minimum tidak boleh lebih besar dari maksimum", Toast.LENGTH_SHORT).show();
+                NotificationHelper.showError(this, "Error", "Gaji minimum tidak boleh lebih besar dari maksimum");
                 return;
             }
 
@@ -99,13 +99,13 @@ public class AddJobActivity extends AppCompatActivity {
             long result = database.jobDao().insertJob(job);
 
             if (result > 0) {
-                Toast.makeText(this, "Lowongan berhasil ditambahkan", Toast.LENGTH_SHORT).show();
+                NotificationHelper.showSuccess(this, "Berhasil", "Lowongan berhasil ditambahkan");
                 finish();
             } else {
-                Toast.makeText(this, "Gagal menambahkan lowongan", Toast.LENGTH_SHORT).show();
+                NotificationHelper.showError(this, "Gagal", "Gagal menambahkan lowongan. Silakan coba lagi.");
             }
         } catch (NumberFormatException e) {
-            Toast.makeText(this, "Format gaji tidak valid", Toast.LENGTH_SHORT).show();
+            NotificationHelper.showError(this, "Error", "Format gaji tidak valid. Silakan masukkan angka yang benar.");
         }
     }
 

@@ -7,12 +7,12 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import com.example.uaswebmobile.R;
 import com.example.uaswebmobile.database.AppDatabase;
 import com.example.uaswebmobile.entity.Job;
+import com.example.uaswebmobile.util.NotificationHelper;
 import com.example.uaswebmobile.util.SharedPrefManager;
 
 public class EditJobActivity extends AppCompatActivity {
@@ -40,14 +40,14 @@ public class EditJobActivity extends AppCompatActivity {
 
         int jobId = getIntent().getIntExtra("job_id", -1);
         if (jobId == -1) {
-            Toast.makeText(this, "Job tidak ditemukan", Toast.LENGTH_SHORT).show();
+            NotificationHelper.showError(this, "Error", "Job tidak ditemukan");
             finish();
             return;
         }
 
         job = database.jobDao().getJobById(jobId);
         if (job == null || job.employerId != sharedPrefManager.getUserId()) {
-            Toast.makeText(this, "Job tidak ditemukan", Toast.LENGTH_SHORT).show();
+            NotificationHelper.showError(this, "Error", "Job tidak ditemukan atau Anda tidak memiliki akses");
             finish();
             return;
         }
@@ -128,7 +128,7 @@ public class EditJobActivity extends AppCompatActivity {
 
         if (jobTitle.isEmpty() || company.isEmpty() || location.isEmpty() ||
             description.isEmpty() || salaryMinStr.isEmpty() || salaryMaxStr.isEmpty()) {
-            Toast.makeText(this, "Semua field harus diisi", Toast.LENGTH_SHORT).show();
+            NotificationHelper.showWarning(this, "Peringatan", "Semua field harus diisi");
             return;
         }
 
@@ -137,7 +137,7 @@ public class EditJobActivity extends AppCompatActivity {
             int salaryMax = Integer.parseInt(salaryMaxStr);
 
             if (salaryMin > salaryMax) {
-                Toast.makeText(this, "Gaji minimum tidak boleh lebih besar dari maksimum", Toast.LENGTH_SHORT).show();
+                NotificationHelper.showError(this, "Error", "Gaji minimum tidak boleh lebih besar dari maksimum");
                 return;
             }
 
@@ -151,17 +151,20 @@ public class EditJobActivity extends AppCompatActivity {
             job.status = status;
 
             database.jobDao().updateJob(job);
-            Toast.makeText(this, "Lowongan berhasil diperbarui", Toast.LENGTH_SHORT).show();
+            NotificationHelper.showSuccess(this, "Berhasil", "Lowongan berhasil diperbarui");
             finish();
         } catch (NumberFormatException e) {
-            Toast.makeText(this, "Format gaji tidak valid", Toast.LENGTH_SHORT).show();
+            NotificationHelper.showError(this, "Error", "Format gaji tidak valid. Silakan masukkan angka yang benar.");
         }
     }
 
     private void deleteJob() {
-        database.jobDao().deleteJob(job);
-        Toast.makeText(this, "Lowongan berhasil dihapus", Toast.LENGTH_SHORT).show();
-        finish();
+        NotificationHelper.showConfirm(this, "Konfirmasi Hapus", 
+            "Apakah Anda yakin ingin menghapus lowongan ini?", () -> {
+                database.jobDao().deleteJob(job);
+                NotificationHelper.showSuccess(this, "Berhasil", "Lowongan berhasil dihapus");
+                finish();
+            });
     }
 
     @Override
